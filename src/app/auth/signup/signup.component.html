@@ -1,1 +1,20 @@
-<p>signup works!</p>
+<h3>Create an Account</h3>
+<form [formGroup]="authForm" class="ui form">
+  <div class="field">
+    <label for="username">Username</label>
+    <input id="username" formControlName="username"/>
+  </div>
+  {{ authForm.get('username')?.errors | json }}
+  <div class="field">
+    <label for="password">Password</label>
+    <input id="password" formControlName="password"/>
+  </div>
+  <div class="field">
+    <label for="passwordConfirmation">Password Confirmation</label>
+    <input id="passwordConfirmation" formControlName="passwordConfirmation"/>
+  </div>
+  <button class="ui submit button primary">
+    Submit
+  </button>
+  {{ authForm.errors | json }}
+</form>

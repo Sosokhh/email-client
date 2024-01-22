@@ -4,6 +4,7 @@ import { BrowserModule, provideClientHydration } from '@angular/platform-browser
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import {AuthModule} from "./auth/auth.module";
+import {HttpClient, HttpClientModule, HttpHandler, provideHttpClient, withFetch} from "@angular/common/http";
 
 @NgModule({
   declarations: [
@@ -12,10 +13,12 @@ import {AuthModule} from "./auth/auth.module";
   imports: [
     BrowserModule,
     AuthModule,
+    HttpClientModule,
     AppRoutingModule
   ],
   providers: [
-    provideClientHydration()
+    provideClientHydration(),
+    provideHttpClient(withFetch())
   ],
   bootstrap: [AppComponent]
 })
