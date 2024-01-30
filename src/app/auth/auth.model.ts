@@ -7,3 +7,8 @@ export interface SignupCredentials {
 export interface SignupResponse {
   username: string;
 }
+
+export interface SignedInResponse {
+  authenticated: boolean;
+  username: string;
+}

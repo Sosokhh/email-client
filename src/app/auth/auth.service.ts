@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {SignupCredentials, SignupResponse} from "./auth.model";
+import {SignedInResponse, SignupCredentials, SignupResponse} from "./auth.model";
 import {BehaviorSubject, tap} from "rxjs";
 
 @Injectable({
@@ -20,19 +20,17 @@ export class AuthService {
   }
 
   signup(credentials: SignupCredentials) {
-    return this.http.post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials, {
-      withCredentials: true
-    })
+    return this.http.post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials)
       .pipe(
         tap(() => this.signedIn$.next(true))
       )
   }
 
   checkAuth() {
-    return this.http.get(`${this.rootUrl}/auth/signedin`, {
-      withCredentials: true
-    }).pipe(
-      tap()
+    return this.http.get<SignedInResponse>(`${this.rootUrl}/auth/signedin`).pipe(
+      tap(({authenticated}) => {
+        this.signedIn$.next(authenticated)
+      })
     )
   }
 
