@@ -5,6 +5,7 @@ import {UniqueUsername} from "../validators/unique-username";
 import {AuthService} from "../auth.service";
 import {SignupCredentials} from "../auth.model";
 import {HttpErrorResponse} from "@angular/common/http";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-signup',
@@ -38,6 +39,7 @@ export class SignupComponent {
 
   constructor(private matchPassword: MatchPassword,
               private uniqueUsername: UniqueUsername,
+              private router: Router,
               private authService: AuthService) {
 
   }
@@ -47,7 +49,7 @@ export class SignupComponent {
 
     this.authService.signup(this.authForm.value as SignupCredentials).subscribe({
       next: response =>  {
-
+        this.router.navigateByUrl('/inbox').then();
       },
       error: (err: HttpErrorResponse) => {
         if (!err.status) {

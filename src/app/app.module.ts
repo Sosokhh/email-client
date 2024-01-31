@@ -6,10 +6,12 @@ import { AppComponent } from './app.component';
 import {AuthModule} from "./auth/auth.module";
 import {HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient, withFetch} from "@angular/common/http";
 import {AuthHttpInterceptor} from "./auth/auth-http-interceptor";
+import { SignOutComponent } from './auth/signout/sign-out.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    SignOutComponent
   ],
   imports: [
     BrowserModule,

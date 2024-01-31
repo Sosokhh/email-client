@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {SignedInResponse, SignupCredentials, SignupResponse} from "./auth.model";
+import {SignedInResponse, SignInCredentials, SignupCredentials, SignupResponse} from "./auth.model";
 import {BehaviorSubject, tap} from "rxjs";
+import {FormControl, ɵFormGroupValue, ɵTypedOrUntyped} from "@angular/forms";
 
 @Injectable({
   providedIn: 'root'
@@ -34,5 +35,17 @@ export class AuthService {
     )
   }
 
+  signOut() {
+    return this.http.post(`${this.rootUrl}/auth/signout`, {}).pipe(
+      tap(() => this.signedIn$.next(false))
+    );
+  }
 
+
+  signIn(credentials: SignInCredentials) {
+    return this.http.post(`${this.rootUrl}/auth/signin`, credentials)
+      .pipe(
+        tap(() => this.signedIn$.next(true))
+      );
+  }
 }
