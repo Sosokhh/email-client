@@ -1,5 +1,6 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
+import {Email} from "../inbox.model";
 
 @Component({
   selector: 'app-email-show',
@@ -7,14 +8,15 @@ import {ActivatedRoute} from "@angular/router";
   styleUrl: './email-show.component.scss'
 })
 export class EmailShowComponent implements OnInit {
+  email!: Email
 
   constructor(private route: ActivatedRoute) {
+
   }
 
   ngOnInit() {
-    this.route.params.subscribe(({ id }) => {
-      console.log(id);
+    this.route.data.subscribe(({ email }) => {
+      this.email = email;
     })
   }
-
 }
