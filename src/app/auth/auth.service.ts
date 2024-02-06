@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
-import {SignedInResponse, SignInCredentials, SignupCredentials, SignupResponse} from "./auth.model";
+import {SignedInResponse, SignInCredentials, SignInResponse, SignupCredentials, SignupResponse} from "./auth.model";
 import {BehaviorSubject, tap} from "rxjs";
 
 @Injectable({
@@ -9,6 +9,7 @@ import {BehaviorSubject, tap} from "rxjs";
 export class AuthService {
   rootUrl = 'https://api.angular-email.com';
   signedIn$ = new BehaviorSubject(false);
+  username = new BehaviorSubject('');
 
   constructor(private http: HttpClient) {
   }
@@ -22,7 +23,10 @@ export class AuthService {
   signup(credentials: SignupCredentials) {
     return this.http.post<SignupResponse>(`${this.rootUrl}/auth/signup`, credentials)
       .pipe(
-        tap(() => this.signedIn$.next(true))
+        tap(({ username }) => {
+          this.signedIn$.next(true);
+          this.username.next(username);
+        })
       )
   }
 
@@ -33,9 +37,9 @@ export class AuthService {
     }
 
     return this.http.get<SignedInResponse>(`${this.rootUrl}/auth/signedin`).pipe(
-      tap(({ authenticated }) => {
-        console.log('Check Auth Response:', authenticated);
+      tap(({ authenticated, username }) => {
         this.signedIn$.next(authenticated);
+        this.username.next(username);
         localStorage.setItem('authStatus', JSON.stringify(authenticated));
       })
     );
@@ -54,11 +58,11 @@ export class AuthService {
 
 
   signIn(credentials: SignInCredentials) {
-    return this.http.post(`${this.rootUrl}/auth/signin`, credentials)
+    return this.http.post<SignInResponse>(`${this.rootUrl}/auth/signin`, credentials)
       .pipe(
-        tap(() =>{
-          console.log('Sign In Successful');
-          this.signedIn$.next(true)
+        tap(({ username }) =>{
+          this.signedIn$.next(true);
+          this.username.next(username);
         } )
       );
   }

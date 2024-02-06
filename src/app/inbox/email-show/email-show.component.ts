@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from "@angular/router";
 import {Email} from "../inbox.model";
+import {DomSanitizer, SafeHtml} from "@angular/platform-browser";
 
 @Component({
   selector: 'app-email-show',
@@ -19,4 +20,5 @@ export class EmailShowComponent implements OnInit {
       this.email = email;
     })
   }
+
 }

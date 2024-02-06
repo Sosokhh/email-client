@@ -59,10 +59,7 @@
             ],
             "scripts": [],
             "server": "src/main.server.ts",
-            "prerender": true,
-            "ssr": {
-              "entry": "server.ts"
-            }
+            "prerender": false
           },
           "configurations": {
             "production": {
@@ -127,5 +124,8 @@
         }
       }
     }
+  },
+  "cli": {
+    "analytics": "ef80815e-e08c-49fa-a2d8-68c1965358a6"
   }
 }
